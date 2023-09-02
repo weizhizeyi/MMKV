@@ -91,8 +91,11 @@ bool File::open() {
     }
     m_fd = ::open(m_path.c_str(), OpenFlag2NativeFlag(m_flag), S_IRWXU);
     if (!isFileValid()) {
-        MMKVError("fail to open [%s], %d(%s)", m_path.c_str(), errno, strerror(errno));
-        return false;
+        m_fd = ::open(m_path.c_str(), O_RDONLY);
+        if (!isFileValid()) {
+            MMKVError("fail to open [%s], %d(%s)", m_path.c_str(), errno, strerror(errno));
+            return false;
+        }
     }
     MMKVInfo("open fd[%p], %s", m_fd, m_path.c_str());
     return true;
@@ -182,11 +185,15 @@ bool MemoryFile::msync(SyncFlag syncFlag) {
 }
 
 bool MemoryFile::mmap() {
+    void *m_ptr_temp = m_ptr;
     m_ptr = (char *) ::mmap(m_ptr, m_size, PROT_READ | PROT_WRITE, MAP_SHARED, m_diskFile.m_fd, 0);
     if (m_ptr == MAP_FAILED) {
-        MMKVError("fail to mmap [%s], %s", m_diskFile.m_path.c_str(), strerror(errno));
-        m_ptr = nullptr;
-        return false;
+        m_ptr = (char *) ::mmap(m_ptr_temp, m_size, PROT_READ, MAP_SHARED, m_diskFile.m_fd, 0);
+        if (m_ptr == MAP_FAILED) {
+            MMKVError("fail to mmap [%s], %s", m_diskFile.m_path.c_str(), strerror(errno));
+            m_ptr = nullptr;
+            return false;
+        }
     }
 
     return true;
