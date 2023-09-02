@@ -31,7 +31,7 @@ Pod::Spec.new do |s|
     "CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" => "NO",
   }
 
-  s.dependency 'MMKVCore', '~> 1.3.1'
+  s.dependency 'MMKVCore', :git => 'https://github.com/weizhizeyi/MMKV.git'
 
 end
 
