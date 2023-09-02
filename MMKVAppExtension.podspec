@@ -31,7 +31,7 @@ Pod::Spec.new do |s|
     "GCC_PREPROCESSOR_DEFINITIONS" => "MMKV_IOS_EXTENSION",
   }
 
-  s.dependency 'MMKVCore', '~> 1.3.1'
+  s.dependency 'MMKVCore', :git => 'https://github.com/weizhizeyi/MMKV.git'
 
 end
 
