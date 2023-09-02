@@ -30,8 +30,5 @@ Pod::Spec.new do |s|
     "CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" => "NO",
     "GCC_PREPROCESSOR_DEFINITIONS" => "MMKV_IOS_EXTENSION",
   }
-
-  s.dependency 'MMKVCore', :git => 'https://github.com/weizhizeyi/MMKV.git'
-
 end
 
