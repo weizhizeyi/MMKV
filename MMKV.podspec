@@ -30,6 +30,6 @@ Pod::Spec.new do |s|
     "CLANG_CXX_LIBRARY" => "libc++",
     "CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF" => "NO",
   }
-
+  s.dependency 'MMKVCore'
 end
 
